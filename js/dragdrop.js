@@ -1,7 +1,7 @@
 /**
  * Created by mehdi on 17/03/17.
  */
-
+(function(){
 var windowsWidth = window.innerWidth
     || document.documentElement.clientWidth
     || document.body.clientWidth;
@@ -81,3 +81,6 @@ document.addEventListener('keypress',function(e) {                      //Listen
     }
 
 },false);
+
+
+})();
