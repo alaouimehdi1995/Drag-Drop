@@ -2,52 +2,56 @@
  * Created by mehdi on 17/03/17.
  */
 
-var wwidth = window.innerWidth
+var windowsWidth = window.innerWidth
     || document.documentElement.clientWidth
     || document.body.clientWidth;
 
-var wheight = window.innerHeight
+var windowsHeight = window.innerHeight
     || document.documentElement.clientHeight
     || document.body.clientHeight;
 
-var move=false;
+var enableDivMove=false;
 
 var target;
 
-updateElements();
+updateEventsForElements();
 
 
-function updateElements(){
+function updateEventsForElements(){
 
-    dragg=document.getElementsByClassName('draggableBox'); //On récupère les éléments ayant 'draggableBox' comme name
+    dragg=document.getElementsByClassName('draggableBox');      //Collecting all elements named 'draggableBox'
 
-    for(var i=0;i<dragg.length;i++) {                       //Pour chaque élement
-        dragg[i].addEventListener('mousedown',function(e){  //On active l'événement lors su clic..
-            move=true;
+    for(var i=0;i<dragg.length;i++) {                           //And for each element..
+        dragg[i].addEventListener('mousedown',function(e){      //We add a listener for mouse clic
+            enableDivMove=true;
             target=e.target;
         }, false);
 
-        document.addEventListener('mousemove',function(e){  //Lors du déplacement du curseur
-            if(move){
-                var posX = e.clientX, posY = e.clientY;
-                var height=parseInt(getComputedStyle(target,null).height)+10,width=parseInt(getComputedStyle(target,null).width);
-                if(parseInt(posY/height)*height>=0 && parseInt(posY/height)*height+height<=wheight){
-                    target.style.top = parseInt(posY/height)*height + "px";
+        document.addEventListener('mousemove',function(e){      //And another listener for mouse move
+
+            if(enableDivMove){                                           //if the mouse moves and the button is down..
+
+                var posX = e.clientX, posY = e.clientY;         //We move the div bloc
+
+                var divHeight=parseInt(getComputedStyle(target,null).height)+10; //10 is for padding-top
+                var divWidth=parseInt(getComputedStyle(target,null).width);
+                if(parseInt(posY/divHeight)*divHeight>=0 && parseInt(posY/divHeight)*divHeight+divHeight<=windowsHeight){
+                    target.style.top = parseInt(posY/divHeight)*divHeight + "px";
                 }
-                else if(parseInt(posY/height)*height<0){
+                else if(parseInt(posY/divHeight)*divHeight<0){
                     target.style.top ="0px";
                 }
                 else{
-                    target.style.top = wheight-height + "px";
+                    target.style.top = windowsHeight-divHeight + "px";
                 }
-                if(parseInt(posX/width)*width>=0 && parseInt(posX/width)*width+width<=wwidth){
-                    target.style.left = parseInt(posX/width)*width + "px";
+                if(parseInt(posX/divWidth)*divWidth>=0 && parseInt(posX/divWidth)*divWidth+divWidth<=windowsWidth){
+                    target.style.left = parseInt(posX/divWidth)*divWidth + "px";
                 }
-                else if(parseInt(posX/width)*width<0){
+                else if(parseInt(posX/divWidth)*divWidth<0){
                     target.style.left ="0px";
                 }
                 else{
-                    target.style.left = wwidth-width + "px";
+                    target.style.left = windowsWidth-divWidth + "px";
                 }
 
 
@@ -55,24 +59,24 @@ function updateElements(){
             }
         } , false);
 
-        dragg[i].addEventListener('mouseup',function(e){ //.. et lors du relâchement du bouton de la souris
-            move=false;
+        dragg[i].addEventListener('mouseup',function(e){        //and the last listener is to desactivate div's move when the button is up
+            enableDivMove=false;
         },false);
 
     }
 }
 
 
-document.addEventListener('keypress',function(e) { //On ajoute aussi l'évenement qui lit du clavier et insère les éléments
-    document.getElementById("instructions").style.visibility="hidden"; //On cache les instructions
-    var saisi=e.keyCode;
+document.addEventListener('keypress',function(e) {                      //Listener that will wait for keypress to add a new div
+    document.getElementById("instructions").style.visibility="hidden";  //Hiding the instructions bloc
+    var saisi=e.keyCode;                                                //Getting the the key pressed's ASCII code
 
-    if(saisi!=127 && saisi!=13){
+    if(saisi!=127 && saisi!=13){                                        //Creating new div with the character (different from 'del' and 'enter')
         var Div=document.createElement('div');
         Div.className="draggableBox";
         Div.innerHTML=String.fromCharCode(saisi)
-        document.body.appendChild(Div);
-        updateElements();
+        document.body.appendChild(Div);                                 //Inserting the new div in html code
+        updateEventsForElements();                                      //Updating elements
 
     }
 
