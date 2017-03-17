@@ -1,14 +1,10 @@
 /**
  * Created by mehdi on 17/03/17.
  */
-(function(){
-var windowsWidth = window.innerWidth
-    || document.documentElement.clientWidth
-    || document.body.clientWidth;
 
-var windowsHeight = window.innerHeight
-    || document.documentElement.clientHeight
-    || document.body.clientHeight;
+var windowsWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+var windowsHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
 var enableDivMove=false;
 
@@ -83,4 +79,3 @@ document.addEventListener('keypress',function(e) {                      //Listen
 },false);
 
 
-})();
