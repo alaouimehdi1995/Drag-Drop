@@ -70,7 +70,7 @@ document.addEventListener('keypress',function(e) {                      //Listen
     if(saisi!=127 && saisi!=13){                                        //Creating new div with the character (different from 'del' and 'enter')
         var Div=document.createElement('div');
         Div.className="draggableBox";
-        Div.innerHTML=String.fromCharCode(saisi)
+        Div.innerHTML=String.fromCharCode(saisi);
         document.body.appendChild(Div);                                 //Inserting the new div in html code
         updateEventsForElements();                                      //Updating elements
 
