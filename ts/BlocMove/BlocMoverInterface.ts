@@ -12,19 +12,13 @@ interface Mover{
 }
 
  abstract class BlocMover implements Mover{
-     
+
      constructor(private blocToMove:Bloc){
-
+        console.log("kda");
      }
-     startMoveTrigger():void {
-     }
-
-     whileMoveTrigger():void {
-     }
-
-     endMoveTrigger():void {
-     }
-
+     abstract startMoveTrigger():void;
+     abstract whileMoveTrigger():void;
+     abstract endMoveTrigger():void;
 
 }
 
